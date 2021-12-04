@@ -1,2 +1,9 @@
 # Project exclude paths
 /venv/
+/.idea/AoC 2020.iml
+/.idea/.gitignore
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
