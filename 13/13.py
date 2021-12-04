@@ -2,7 +2,7 @@
 import re
 regNum = re.compile(r"\d+")
 
-with open("data.txt") as file:
+with open("test.txt") as file:
     lines = file.read().splitlines()
 
 timestamp = int(lines[0])
@@ -15,4 +15,3 @@ for bus in busesTask1:
 for bus, departure in nextDeparture.items():
     if departure == min(nextDeparture.values()):
         print("Task 1:",bus * departure)
-
