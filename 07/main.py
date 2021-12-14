@@ -1,37 +1,35 @@
 # Advent of Code - Day7
-from pprint import pprint as pp
+from collections import deque
 
-#TODO: not working recursion
-
-def findShinyBag(shiny, bag):
-    for child in bags[bag]:
-        if child == shiny:
-            return True
-        else:
-            findShinyBag(shiny, child)
-    return False
+def task1(shiny):
+    for parent in bags.keys():
+        queue.append([parent])
+    results = set()
+    while queue:
+        for _ in range(len(queue)):
+            checkedBag = queue[0]
+            for kid in bags[checkedBag[-1]]:
+                if kid[2:] == shiny:
+                    results.add(checkedBag[0])
+                else:
+                    newPath = checkedBag + [kid[2:]]
+                    if kid != "no other bag":
+                        queue.append(newPath)
+            queue.popleft()
+    return len(results)
 
 #MAIN
-with open("test.txt") as file:
-    data = file.read().splitlines()
-
-result = []
+with open("data.txt") as file:
+    lines = [line[:-1] for line in file.read().replace("bags", "bag").splitlines()]
 
 bags = {}
-for line in data:
-    textLine = line.replace(" contain", ":").replace("bags", "bag").replace(".","")
-    textLine = textLine.split(": ")
-    if not textLine[0] in bags.keys():
-        bags.setdefault(textLine[0], textLine[1].split(", "))
+queue = deque()
+for line in lines:
+    bag = line.split(" contain ")
+    parent, kids = bag
+    kids = kids.split(", ")
+    bags[parent] = kids
 
 shiny = "shiny gold bag"
 
-pp(bags)
-
-#task1
-counter = 0
-for bag in bags.keys():
-    if findShinyBag(shiny, bag):
-        counter += 1
-
-print(counter)
+print("Task 1:", task1(shiny))
